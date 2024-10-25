@@ -9,30 +9,48 @@ filesets:
       - rtl/primitives/wishbone_if.sv
     file_type: systemVerilogSource
 
+  xilinx_ip:
+    files:
+      # This have to be changed depending on user's Vivado location.
+      # Not pretty, TODO: change this.
+      - /tools/Xilinx/Vivado/2023.2/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv 
+    file_type: systemVerilogSource
+
   tb:
     files:
       - tb/wb_sim_master.sv
       - tb/tb_pkg.sv
       - tb/mem/xpm_ram_tb.sv
-    file_type: systemVerilogSource
+    file_type: systemVerilogSource  
 
 targets:
   default: &default
     filesets:
       - rtl
     toplevel: dummy
-    default_tool: xsim
+    default_tool: modelsim
     tools:
+      # xsim sadly fails miserably with unspecified "FATAL ERROR". It is therefore
+      # unusable for these testbenches and this config is left only for reference.
       xsim:
         xsim_options:
           - --wdb dump.wdb
         xelab_options:
           - -L xpm
           - -timescale=1ns/1ps
+      modelsim:
+        vsim_options:
+          # This is needed to dump all variables.
+          - -voptargs=+acc=npr
+          - -voptargs=-timescale=1ns/1ps
 
-  xpm_ram_tb:
+  tb: &tb
     <<: *default
     filesets_append:
+      - xilinx_ip
       - tb
+
+  xpm_ram_tb:
+    <<: *tb
     toplevel: xpm_ram_tb
   
