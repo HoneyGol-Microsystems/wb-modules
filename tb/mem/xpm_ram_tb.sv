@@ -1,5 +1,7 @@
 module xpm_ram_tb ();
     
+    import tb_pkg::wb_sim_master;
+
     logic clk, rst;
     wishbone_if wb_if(
         .clk_i(clk),

@@ -12,6 +12,7 @@ filesets:
   tb:
     files:
       - tb/wb_sim_master.sv
+      - tb/tb_pkg.sv
       - tb/mem/xpm_ram_tb.sv
     file_type: systemVerilogSource
 
