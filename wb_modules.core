@@ -1,0 +1,37 @@
+CAPI=2:
+name: hgm:vesp-ip:wb-modules:1.0.0
+description: VESP Wishbone modules
+
+filesets:
+  rtl:
+    files:
+      - rtl/mem/xpm_ram.sv
+      - rtl/primitives/wishbone_if.sv
+    file_type: systemVerilogSource
+
+  tb:
+    files:
+      - tb/wb_sim_master.sv
+      - tb/mem/xpm_ram_tb.sv
+    file_type: systemVerilogSource
+
+targets:
+  default: &default
+    filesets:
+      - rtl
+    toplevel: dummy
+    default_tool: xsim
+    tools:
+      xsim:
+        xsim_options:
+          - --wdb dump.wdb
+        xelab_options:
+          - -L xpm
+          - -timescale=1ns/1ps
+
+  xpm_ram_tb:
+    <<: *default
+    filesets_append:
+      - tb
+    toplevel: xpm_ram_tb
+  
