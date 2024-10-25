@@ -2,7 +2,7 @@ module xpm_ram #(
     parameter ADDR_WIDTH = 20,
     parameter DATA_WIDTH = 32,
     parameter LATENCY    = 2,
-    parameter INIT_FILE  = "",
+    parameter INIT_FILE  = "none",
     parameter WORD_COUNT = 64
 ) (
     wishbone_if.slave   wb
@@ -116,7 +116,7 @@ module xpm_ram #(
         .douta(wb.dat_o),
         .addra(a_padded),
         .clka(wb.clk_i),
-        .dina(wb_dat_i),
+        .dina(wb.dat_i),
         .ena(memory_enable),
         .rsta(wb.rst_i),
         .wea(we_per_byte) // Vector (for every byte), not a single bit!
