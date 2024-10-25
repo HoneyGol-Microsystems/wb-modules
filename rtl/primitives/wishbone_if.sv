@@ -17,6 +17,8 @@ interface wishbone_if #(
     logic                              cyc;
 
     modport master (
+        input   clk_i,
+        input   rst_i,
         input   .dat_i(dat_to_master),
         input   ack,
         output  adr,
@@ -28,6 +30,8 @@ interface wishbone_if #(
     );
 
     modport slave (
+        input   clk_i,
+        input   rst_i,
         input   adr,
         input   .dat_i(dat_from_master),
         input   we,
