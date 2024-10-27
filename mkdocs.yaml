@@ -1,0 +1,4 @@
+site_name: VESP Wishbone Modules documentation
+
+theme:
+  name: readthedocs
