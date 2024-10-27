@@ -16,7 +16,7 @@ class xpm_ram_model #(
         bit [DATA_WIDTH-1:0] expanded_mask;
 
         for (int i = 0; i < DATA_WIDTH / 8; i++) begin
-            expanded_mask[i +: 8] = {8{mask[i]}};
+            expanded_mask[i * 8 +: 8] = {8{mask[i]}};
         end
 
         return expanded_mask;
@@ -36,7 +36,7 @@ class xpm_ram_model #(
     );
         for (int i = 0; i < DATA_WIDTH / 8; i++) begin
             if (mask[i]) begin
-                mem[addr][i +: 8] = write_data[i +: 8];
+                mem[addr][i * 8 +: 8] = write_data[i * 8 +: 8];
             end
         end
     endfunction // write
