@@ -1,3 +1,4 @@
+// !!! This is a very basic testbench for only default parameters.
 module xpm_ram_tb ();
     
     import tb_pkg::wb_sim_master;
