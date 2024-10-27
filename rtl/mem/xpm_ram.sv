@@ -40,6 +40,7 @@ module xpm_ram #(
             ST_WAIT: begin
                 if (counter_top) begin
                     wb.ack = 1'b1;
+                    memory_enable = 1'b1;
                 end else if (wb.cyc && wb.stb) begin
                     memory_enable = 1'b1;
                 end
@@ -104,7 +105,6 @@ module xpm_ram #(
         .MEMORY_OPTIMIZATION("false"),
         .MEMORY_PRIMITIVE("block"),
         .MEMORY_SIZE(WORD_COUNT * DATA_WIDTH),
-        .MESSAGE_CONTROL(1),
         .READ_DATA_WIDTH_A(DATA_WIDTH),
         .READ_LATENCY_A(1),
         .SIM_ASSERT_CHK(1),
