@@ -19,6 +19,7 @@ filesets:
   tb:
     files:
       - tb/wb_sim_master.sv
+      - tb/mem/xpm_ram_model.sv
       - tb/tb_pkg.sv
       - tb/mem/xpm_ram_tb.sv
     file_type: systemVerilogSource  
@@ -40,8 +41,14 @@ targets:
           - -timescale=1ns/1ps
       modelsim:
         vsim_options:
+          # This allows to debug class variables. Not working at its own, "log" command either in GUI or
+          # in 'do' script needs to be provided!
+          - -classdebug
+          # This will log all signals/vars of all instances of specified classes/memories.
+          - -do "log -class sim:/tb_pkg::xpm_ram_model__1; log sim:/xpm_ram_tb/dut/xpm_memory_spram_inst/xpm_memory_base_inst/mem"
           # This is needed to dump all variables.
-          - -voptargs=+acc=npr
+          # - -voptargs=+acc=npr
+          - -voptargs=+acc=lprn
           - -voptargs=-timescale=1ns/1ps
 
   tb: &tb
