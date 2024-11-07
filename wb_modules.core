@@ -28,6 +28,7 @@ targets:
   default: &default
     filesets:
       - rtl
+      - xilinx_ip
     toplevel: dummy
     default_tool: modelsim
     tools:
