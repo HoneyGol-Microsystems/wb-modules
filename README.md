@@ -1,5 +1,5 @@
 # VESP Wishbone Modules
-This repository contains Wishbone modules for the VESP project. More information about modules is in the documentation (link TBA, for now check `docs/` dir).
+This repository contains Wishbone modules for the VESP project. More information about modules is in the [documentation](https://honeygol-microsystems.github.io/wb-modules/).
 
 ## Modules
 - XPM RAM
