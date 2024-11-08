@@ -21,4 +21,4 @@ jobs:
 
       - name: Deploy docs
         working-directory: ${{ vars.GITHUB_WORKSPACE }}
-        run: mkdocs gh-deploy
+        run: mkdocs gh-deploy --force
