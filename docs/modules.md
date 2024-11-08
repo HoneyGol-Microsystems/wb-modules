@@ -31,11 +31,11 @@ This module implements a 32-bit wide GPIO ports.
 GPIO consists of 3 registers: direction register, read data register and write data register. GPIO register set is word-addressable only. Only lower 4 bits of address
 are decoded. `X` means don't care.
 
-| Address | Register |
-| ------- | -------- |
-| 4'b00XX | direction |
-| 4'b01XX | data to be output on ports |
-| 4'b10XX | data read from ports |
+| Address | Access |Register |
+| ------- | ------ | ------- |
+| 4'b00XX | R/W | direction |
+| 4'b01XX | R/W | data to be output on ports |
+| 4'b10XX | R   | data read from ports |
 
 Direction register drives all 32 ports, meaning each bit controls one port. Directions are encoded as following:
 
