@@ -1,26 +1,29 @@
 module wb_gpio(
-    wishbone_p_if.slave     wb
+    wishbone_p_if.slave     wb,
     inout wire logic [31:0] gpio_ports
 );
+
+    // Don't forget about little endian ordering!
     typedef struct packed {
-        logic [31:0] dir;
-        logic [31:0] wr_val;
-        logic [31:0] rd_val;
         logic [31:0] reserved;
+        logic [31:0] rd_val;
+        logic [31:0] wr_val;
+        logic [31:0] dir;     // Item 0
     } gpio_registers;
 
-    gpio_registers regs;
-    logic          reg_select;
-    logic          gpio_ports_sync;
+    gpio_registers          regs;
+    // This has to be strictly a wire. If not, it could happen it is placed inside some always block
+    // and then, if used in another block, it would depend on block execution order.
+    wire logic      [1:0]   reg_select;
+    logic           [31:0]  gpio_ports_sync;
     
     /////////////////////////////////////////////////
     // Wishbone handling
     /////////////////////////////////////////////////
+    // Convenience wire.
+    assign reg_select = wb.adr[3:2];
+
     always_comb begin : wishbone_signal_handling
-
-        // Convenience wire.
-        reg_select = wb.adr[3:2];
-
         // This is a simple register set; we can keep
         // with whatever master's pace is.
         wb.stall   = 1'b0;
@@ -34,9 +37,9 @@ module wb_gpio(
 
     always_comb begin : register_read_proc
         if (wb.cyc && wb.stb && !wb.we) begin
-            dat_o = regs[reg_select * 32 :+ 32]
+            wb.dat_o = regs[reg_select * 32 +: 32];
         end else begin
-            dat_o = 32'h0;
+            wb.dat_o = 32'h0;
         end
     end 
 
@@ -52,7 +55,6 @@ module wb_gpio(
             case (reg_select)
                 2'b00: regs.dir    <= wb.dat_i;
                 2'b01: regs.wr_val <= wb.dat_i;
-                2'b10: regs.rd_val <= wb.dat_i;
                 default: begin end
             endcase    
         end
@@ -87,7 +89,7 @@ module wb_gpio(
         for (i = 0; i < 32; i++) begin
             // 1 -> output
             // 0 -> input
-            assign gpio_ports[i] = regs.dir[i] ? regs.wr[i] : 1'bZ;
+            assign gpio_ports[i] = regs.dir[i] ? regs.wr_val[i] : 1'bz;
         end
     endgenerate
 endmodule

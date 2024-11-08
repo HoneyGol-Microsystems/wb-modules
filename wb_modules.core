@@ -7,6 +7,7 @@ filesets:
     files:
       - rtl/primitives/wishbone_if.sv
       - rtl/primitives/wishbone_p_if.sv
+      - rtl/primitives/synchronizer.sv
       - rtl/gpio/wb_gpio.sv
       - rtl/mem/wb_xpm_ram.sv
       - rtl/sosif/wb_sosif.sv
@@ -22,9 +23,11 @@ filesets:
   tb:
     files:
       - tb/wb_sim_master.sv
+      - tb/wb_p_sim_master.sv
       - tb/mem/xpm_ram_model.sv
       - tb/tb_pkg.sv
       - tb/mem/xpm_ram_tb.sv
+      - tb/gpio/gpio_tb.sv
     file_type: systemVerilogSource  
 
 targets:
@@ -64,4 +67,8 @@ targets:
   xpm_ram_tb:
     <<: *tb
     toplevel: xpm_ram_tb
+  
+  gpio_tb:
+    <<: *tb
+    toplevel: gpio_tb
   
