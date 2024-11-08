@@ -1,4 +1,9 @@
 site_name: VESP Wishbone Modules documentation
 
+nav:
+  - index.md
+  - modules.md
+  - debugging.md
+
 theme:
   name: readthedocs
