@@ -6,6 +6,7 @@ filesets:
   rtl:
     files:
       - rtl/mem/xpm_ram.sv
+      - rtl/sosif/sosif.sv
       - rtl/primitives/wishbone_if.sv
     file_type: systemVerilogSource
 
