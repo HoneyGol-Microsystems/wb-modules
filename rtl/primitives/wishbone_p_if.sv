@@ -1,5 +1,5 @@
-// Wishbone B4 classic interface.
-interface wishbone_if #(
+// Wishbone B4 classic pipelined interface.
+interface wishbone_p_if #(
     parameter DATA_WIDTH  = 32,
     parameter ADDR_WIDTH  = 32,
     parameter GRANULARITY = 8
@@ -16,12 +16,14 @@ interface wishbone_if #(
     logic                              stb;
     logic                              ack;
     logic                              cyc;
+    logic                              stall;
 
     modport master (
         input   clk_i,
         input   rst_i,
         input   .dat_i(dat_to_master),
         input   ack,
+        input   stall,
         output  adr,
         output  .dat_o(dat_from_master),
         output  we,
@@ -40,7 +42,8 @@ interface wishbone_if #(
         input   stb,
         input   cyc,
         output  .dat_o(dat_to_master),
-        output  ack
+        output  ack,
+        output  stall
     );
 
     initial begin

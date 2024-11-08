@@ -5,9 +5,11 @@ description: VESP Wishbone modules
 filesets:
   rtl:
     files:
-      - rtl/mem/xpm_ram.sv
-      - rtl/sosif/sosif.sv
       - rtl/primitives/wishbone_if.sv
+      - rtl/primitives/wishbone_p_if.sv
+      - rtl/gpio/wb_gpio.sv
+      - rtl/mem/wb_xpm_ram.sv
+      - rtl/sosif/wb_sosif.sv
     file_type: systemVerilogSource
 
   xilinx_ip:

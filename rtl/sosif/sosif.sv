@@ -5,7 +5,7 @@ Non-synthesizable.
 This module is an interface between software running on the VESP and the simulator.
 Basically it allows to control simulation from inside the program.
 */
-module module_sosif (
+module wb_sosif (
     wishbone_if.slave    wb,
     output  logic [15:0] irq_bus
 );

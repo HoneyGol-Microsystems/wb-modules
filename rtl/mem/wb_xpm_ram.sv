@@ -1,4 +1,4 @@
-module xpm_ram #(
+module wb_xpm_ram #(
     parameter ADDR_WIDTH = 20,
     parameter DATA_WIDTH = 32,
     parameter LATENCY    = 2,
