@@ -47,7 +47,7 @@ targets:
           # in 'do' script needs to be provided!
           - -classdebug
           # This will log all signals/vars of all instances of specified classes/memories.
-          - -do "log -class sim:/tb_pkg::xpm_ram_model__1; log sim:/xpm_ram_tb/dut/xpm_memory_spram_inst/xpm_memory_base_inst/mem"
+          # - -do "log -class sim:/tb_pkg::xpm_ram_model__1; log sim:/xpm_ram_tb/dut/xpm_memory_spram_inst/xpm_memory_base_inst/mem"
           # This is needed to dump all variables.
           # - -voptargs=+acc=npr
           - -voptargs=+acc=lprn
