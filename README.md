@@ -5,6 +5,8 @@ This repository contains Wishbone modules for the VESP project. More information
 - XPM RAM
 - GPIO
 - SOSIF (software-simulator interface)
+- PWM
+- Input debouncer
 
 ## Simulation quickstart
 Dependencies:

@@ -78,3 +78,63 @@ Examples:
 - To terminate the simulation without any additional message, write `0x00000001`.
 
 - To put character 'A' to a message buffer and then print it using SystemVerilog's `$info`, write `0x00004110` and then `0x00000011`.
+
+## PWM
+This block implements very simple 12-bit PWM outputs.
+
+| Parameter              | Value                                                     |
+|------------------------|-----------------------------------------------------------|
+| Wishbone revision      | B4                                                        |
+| Interface type         | SLAVE                                                     |
+| Supported cycles       | SLAVE, (pipelined) READ/WRITE                             |
+| Data port size         | 32 bit                                                    |
+| Data port granularity  | 32 bit (byte or half word access not supported)           |
+| Data port max size     | 32 bit                                                    |
+| Data transfer ordering | Little endian                                             |
+
+The PWM block contains a variable number of 12-bit PWMs. The number of PWMs is configurable via `PWM_PORT_CNT` and must be even.
+
+Depending on PWM count, there will be (`PWM_PORT_CNT`/2) number of 32-bit configuration registers, each register contains a duty cycle configuration of two PWM outputs (called LO and HI) The structure of the register follows:
+
+| Bits | Access | Content | 
+| ---- | ------ | ------- |
+| 31-28 | - | - |
+| 27-16 | R/W | PWM HI duty cycle |
+| 15-12 | - |  - |
+| 11-0 | R/W | PWM LO duty cycle |
+
+The registers are mapped to addresses in sequential manner. For example, if `PWM_PORT_CNT` is 8, there will be 4 registers available at these addresses:
+
+- `32'hxxxx_xxx0`
+- `32'hxxxx_xxx4`
+- `32'hxxxx_xxx8`
+- `32'hxxxx_xxxC`
+
+where 'x' means don't care -- this part of address will be mapped by your interconnect.
+
+## Debouncer
+The debouncer block is useful for denoising external user inputs, such as buttons (often present on learning FPGA boards, such as Basys 3, Zybo, Nexys Video...).
+
+The debouncer contains variable number of outputs (configurable by `PORT_CNT` parameter, up to 32). The width of debouncing timer is configurable (`TIMER_WIDTH`). It is recommended to configure this parameter depending on clock speed.
+
+The debouncer works as following: if change on input is detected, a timer will be started. If timer reaches top (see note), input will be passed to output. However, if a change is detected before timer reaches top, the timer will be restarted and the process is repeated.
+
+*Note: to spare some logic, only top bit of the timer is checked. As such, the real length of timer is roughly one bit lower.*
+
+`TIMER_WIDTH` should be calculated as following:
+
+`TIMER_WIDTH` = ceil(log2(largest_gap_between_bounces * clock_speed)) + 1
+
+The default value (22) is calculated for 100 MHz clock and ~20 ms gap between bounces.
+
+| Parameter              | Value                                                     |
+|------------------------|-----------------------------------------------------------|
+| Wishbone revision      | B4                                                        |
+| Interface type         | SLAVE                                                     |
+| Supported cycles       | SLAVE, (pipelined) READ/WRITE                             |
+| Data port size         | 32 bit                                                    |
+| Data port granularity  | 32 bit (byte or half word access not supported)           |
+| Data port max size     | 32 bit                                                    |
+| Data transfer ordering | Little endian                                             |
+
+There is only one read-only register, where each bit represents a single input. It there is less than 32 inputs configured, bits will be mapped LSB-first, the others will be read-only zero.

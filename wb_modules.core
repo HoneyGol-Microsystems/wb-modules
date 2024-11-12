@@ -9,6 +9,9 @@ filesets:
       - rtl/primitives/wishbone_p_if.sv
       - rtl/primitives/synchronizer.sv
       - rtl/gpio/wb_gpio.sv
+      - rtl/pwm/wb_pwm.sv
+      - rtl/debouncer/debouncer_block.sv
+      - rtl/debouncer/wb_debouncer.sv
       - rtl/mem/wb_xpm_ram.sv
       - rtl/sosif/wb_sosif.sv
     file_type: systemVerilogSource
@@ -28,6 +31,8 @@ filesets:
       - tb/tb_pkg.sv
       - tb/mem/xpm_ram_tb.sv
       - tb/gpio/gpio_tb.sv
+      - tb/pwm/pwm_tb.sv
+      - tb/debouncer/debouncer_tb.sv
     file_type: systemVerilogSource  
 
 targets:
@@ -72,3 +77,10 @@ targets:
     <<: *tb
     toplevel: gpio_tb
   
+  pwm_tb:
+    <<: *tb
+    toplevel: pwm_tb
+
+  debouncer_tb:
+    <<: *tb
+    toplevel: debouncer_tb

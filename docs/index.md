@@ -21,3 +21,8 @@ Signals are named similarly as in Wishbone specification. This specific naming i
 | dat_o       | DAT_O               |
 | ack         | ACK_O               |
 | stall       | STALL_O             |
+
+## Verification and guarantees
+All blocks are verified using very simple testbench testing basic cases. These testbenches are mainly used as syntax and sanity checks. Some testbenches contain very simple formal property checking, but it is far from ideal.
+
+This project does not provide any guarantees. It is not suitable for any production use.
