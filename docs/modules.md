@@ -138,3 +138,34 @@ The default value (22) is calculated for 100 MHz clock and ~20 ms gap between bo
 | Data transfer ordering | Little endian                                             |
 
 There is only one read-only register, where each bit represents a single input. It there is less than 32 inputs configured, bits will be mapped LSB-first, the others will be read-only zero.
+
+## RISC-V compliant machine timer
+This module implements a 64-bit timer with IRQ output which complies to the RISC-V Privileged Specification.
+
+There is only one parameter: CLK_FREQUENCY_HZ, which should be set to a frequency of the system clock. It is used
+by the platform to determine timer tick frequency as required by the specification.
+
+| Parameter              | Value                                                     |
+|------------------------|-----------------------------------------------------------|
+| Wishbone revision      | B4                                                        |
+| Interface type         | SLAVE                                                     |
+| Supported cycles       | SLAVE, (pipelined) READ/WRITE                             |
+| Data port size         | 32 bit                                                    |
+| Data port granularity  | 32 bit (byte or half word access not supported)           |
+| Data port max size     | 32 bit                                                    |
+| Data transfer ordering | Little endian                                             |
+
+Timer consists of 3 pcs of 64-bit registers:
+
+| Address | Access |Register |
+| ------- | ------ | ------- |
+| 5'b00HXX | R/W | mtime (timer value) |
+| 5'b01HXX | R/W | mtimecmp (timer compare register) |
+| 5'b10HXX | R   | timer tick frequency |
+
+Notes:
+- XX means don't care. Because granularity is 32-bit, all 4 byte offsets will return the same value.
+- H is decoded as low/high word selector. Because registers are 64-bit (for all architectures) and the bus is only 32-bit, this selector bit is required.
+- Timer tick is actually a constant set by the CLK_FREQUENCY_HZ.
+
+There is an IRQ output, which is triggered when mtime >= mtimecmp and stays until this condition is true.

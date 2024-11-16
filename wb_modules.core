@@ -14,6 +14,7 @@ filesets:
       - rtl/debouncer/wb_debouncer.sv
       - rtl/mem/wb_xpm_ram.sv
       - rtl/sosif/wb_sosif.sv
+      - rtl/timer/wb_riscv_timer.sv
     file_type: systemVerilogSource
 
   xilinx_ip:
@@ -32,6 +33,7 @@ filesets:
       - tb/mem/xpm_ram_tb.sv
       - tb/gpio/gpio_tb.sv
       - tb/pwm/pwm_tb.sv
+      - tb/timer/riscv_timer_tb.sv
       - tb/debouncer/debouncer_tb.sv
     file_type: systemVerilogSource  
 
@@ -84,3 +86,7 @@ targets:
   debouncer_tb:
     <<: *tb
     toplevel: debouncer_tb
+
+  riscv_timer_tb:
+    <<: *tb
+    toplevel: riscv_timer_tb
