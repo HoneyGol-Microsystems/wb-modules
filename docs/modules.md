@@ -1,6 +1,8 @@
 # Module documentation
 
 ## XPM RAM
+Module name: `wb_xpm_ram`
+
 This module implements a basic parametrizable XPM RAM SLAVE module.
 
 Here are relevant parameters as dictated by Wishbone specification B4:
@@ -16,6 +18,8 @@ Here are relevant parameters as dictated by Wishbone specification B4:
 | Data transfer ordering | Little endian                                             |
 
 ## 32-bit GPIO
+Module name: `wb_gpio`
+
 This module implements a 32-bit wide GPIO ports.
 
 | Parameter              | Value                                                     |
@@ -44,6 +48,8 @@ Direction register drives all 32 ports, meaning each bit controls one port. Dire
 - `1`: output
 
 ## SOSIF
+Module name: `wb_sosif`
+
 This block implements an interface between any Wishbone master (e.g. CPU) and an RTL simulator. This block is obviously non-synthesizable.
 
 | Parameter              | Value                                                     |
@@ -80,6 +86,8 @@ Examples:
 - To put character 'A' to a message buffer and then print it using SystemVerilog's `$info`, write `0x00004110` and then `0x00000011`.
 
 ## PWM
+Module name: `wb_pwm`
+
 This block implements very simple 12-bit PWM outputs.
 
 | Parameter              | Value                                                     |
@@ -113,6 +121,8 @@ The registers are mapped to addresses in sequential manner. For example, if `PWM
 where 'x' means don't care -- this part of address will be mapped by your interconnect.
 
 ## Debouncer
+Module name: `wb_debouncer`
+
 The debouncer block is useful for denoising external user inputs, such as buttons (often present on learning FPGA boards, such as Basys 3, Zybo, Nexys Video...).
 
 The debouncer contains variable number of outputs (configurable by `PORT_CNT` parameter, up to 32). The width of debouncing timer is configurable (`TIMER_WIDTH`). It is recommended to configure this parameter depending on clock speed.
@@ -140,6 +150,8 @@ The default value (22) is calculated for 100 MHz clock and ~20 ms gap between bo
 There is only one read-only register, where each bit represents a single input. It there is less than 32 inputs configured, bits will be mapped LSB-first, the others will be read-only zero.
 
 ## RISC-V compliant machine timer
+Module name: `wb_riscv_timer`
+
 This module implements a 64-bit timer with IRQ output which complies to the RISC-V Privileged Specification.
 
 There is only one parameter: CLK_FREQUENCY_HZ, which should be set to a frequency of the system clock. It is used
