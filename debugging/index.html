@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Debugging in simulation - VESP Wishbone Modules documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Debugging in simulation";
+        var mkdocs_page_input_path = "debugging.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> VESP Wishbone Modules documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">VESP Wishbone Modules documentation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../modules/">Module documentation</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Debugging in simulation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#running-a-simulation">Running a simulation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#debugging-classes-or-memories">Debugging classes or memories</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notes-about-adding-more-objects-to-the-log">Notes about adding more objects to the log</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">VESP Wishbone Modules documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Debugging in simulation</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="debugging-in-simulation">Debugging in simulation</h1>
+<p>For simulation we use Mentor's Questa Sim (formerly known as Modelsim), because Xilinx's xsim was deemed to be insufficient for the project, mainly because of random fatal errors with no further information when using SystemVerilog interface expressions. Other simulators from the 'top 3' should work as well: Synopsys VCS and Cadence Xcelium. To use these, just add appropriate configuration to the FuseSoC core file.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>The project uses Xilinx's IP. Xilinx's own simulator, xsim, links all of these automatically. However, we use a third-party simulator, Questa Sim, where we need to specify paths to those IPs manually. Sadly all of them are non-public, this means that you need to obtain them by yourself (by default all of them are included in Vivado installation) and edit paths in FuseSoC. Before proceeding, change all paths in <code>xilinx_ip</code> fileset in FuseSoC core file according to your installation. Don't commit these changes.</p>
+<h2 id="running-a-simulation">Running a simulation</h2>
+<p>To generate simulation configuration, we use FuseSoC. To run a unit testbench, use target with the name of the unit testbench you want to run (have a look at the <code>wb_modules.core</code>):</p>
+<pre><code class="language-sh">fusesoc run --target xpm_ram_tb wb-modules
+</code></pre>
+<p>This command will generate a project in <code>build</code> directory and run a simulation. The simulation will output a log to the console and to a <code>transcript</code> file. Also, waveform log will be produced, by default to a <code>vsim.wlf</code> file. This file contains logs of all static signals except memories and is viewable by using command <code>vsim -view vsim.wlf</code>. If you make any changes to the RTL when viewing the log, just relaunch FuseSoC and after the simulation finished, just click <code>Refresh</code> button in vsim; all data will be updated.</p>
+<h2 id="debugging-classes-or-memories">Debugging classes or memories</h2>
+<p>Note that no class variables (or memories) are logged to the waveform log, unless they are explicitly specified. Some of these are already specified in the FuseSoC core file. To specify more (or newly created classes) or memories, launch the GUI and find signal names. After that, you can continue to debug using the GUI or add the crafted <code>log</code> commands to the FuseSoC config for the signals to be always included in the <code>wlf</code> file.</p>
+<p>To debug classes/memories with Questa Sim GUI, you need to:
+1. (Only for class debugging.) Pass <code>-classdebug</code> to the <code>vsim</code> command. This is already passed by FuseSoC to the generated Makefile automatically.
+2. Run Questa Sim manually via generated Makefile: enter the generated directory and run <code>make run-gui</code>.
+3. In the GUI, look for the class type in the <code>Structure</code> window. Then, open <code>Class Instances</code> via <code>View</code> menu and select class instance. Select <code>Add Wave</code> in right click menu.
+4. Class variables are still not logged: to log these, write <code>log -class</code> to the Transcript console and drag the class type to the console. Hit enter. Now restart and rerun the simulation, class variables of class instances of this type will be now logged.</p>
+<p>Please note that when running Questa Sim GUI manually, no changes will be to the source RTL will be reflected until regenerating the project using FuseSoC and relaunching the Questa.</p>
+<h2 id="notes-about-adding-more-objects-to-the-log">Notes about adding more objects to the log</h2>
+<p>By default, Questa does not log neither class variables nor memories. To do that in GUI, <code>log &lt;...&gt;</code> command is used in the Transcript console. It can be done also when using the CLI: you need to add one or more of these commands to the 'do' files or specify them directly in the <code>-do</code> argument. The second method is used in this project as well. Because FuseSoC allows to specify arbitrary extra command to be passed to vsim and Questa allows more <code>-do</code> arguments in a single invocation, we can misuse the FuseSoC's functionality to inject our own 'do' commands. This is perfect for configuring the simulator to our liking, such as adding more objects to be logged. Although this method can be fragile (change of Questa or FuseSoC will break it), it does not require any changes to FuseSoC or any manual copying to a project generated by FuseSoC. Also, this method allows way quicker debugging - on every change to RTL, you only need to recompile a relaunch simulation using FuseSoC and hit Refresh button in vsim viewer -- no need to relaunch Questa every time as is needed in interactive GUI sessions.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../modules/" class="btn btn-neutral float-left" title="Module documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../modules/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
