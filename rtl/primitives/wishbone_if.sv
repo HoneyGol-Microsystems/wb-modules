@@ -16,12 +16,14 @@ interface wishbone_if #(
     logic                              stb;
     logic                              ack;
     logic                              cyc;
+    logic                              err;
 
     modport master (
         input   clk_i,
         input   rst_i,
         input   .dat_i(dat_to_master),
         input   ack,
+        input   err,
         output  adr,
         output  .dat_o(dat_from_master),
         output  we,
@@ -40,7 +42,8 @@ interface wishbone_if #(
         input   stb,
         input   cyc,
         output  .dat_o(dat_to_master),
-        output  ack
+        output  ack,
+        output  err
     );
 
     initial begin

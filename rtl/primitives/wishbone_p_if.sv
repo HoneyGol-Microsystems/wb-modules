@@ -17,6 +17,7 @@ interface wishbone_p_if #(
     logic                              ack;
     logic                              cyc;
     logic                              stall;
+    logic                              err;
 
     modport master (
         input   clk_i,
@@ -24,6 +25,7 @@ interface wishbone_p_if #(
         input   .dat_i(dat_to_master),
         input   ack,
         input   stall,
+        input   err,
         output  adr,
         output  .dat_o(dat_from_master),
         output  we,
@@ -43,7 +45,8 @@ interface wishbone_p_if #(
         input   cyc,
         output  .dat_o(dat_to_master),
         output  ack,
-        output  stall
+        output  stall,
+        output  err
     );
 
     initial begin
