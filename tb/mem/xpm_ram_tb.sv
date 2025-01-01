@@ -9,7 +9,7 @@ module xpm_ram_tb ();
         .clk_i(clk),
         .rst_i(rst)
     );
-    xpm_ram dut(wb_if.slave);
+    wb_xpm_ram dut(wb_if.slave);
     wb_sim_master dut_if;
     xpm_ram_model model;
 
