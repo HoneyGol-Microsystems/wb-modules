@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Module documentation - VESP Wishbone Modules documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Module documentation";
+        var mkdocs_page_input_path = "modules.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> VESP Wishbone Modules documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">VESP Wishbone Modules documentation</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Module documentation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#xpm-ram">XPM RAM</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#32-bit-gpio">32-bit GPIO</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sosif">SOSIF</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pwm">PWM</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#debouncer">Debouncer</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#risc-v-compliant-machine-timer">RISC-V compliant machine timer</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../debugging/">Debugging in simulation</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">VESP Wishbone Modules documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Module documentation</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="module-documentation">Module documentation</h1>
+<h2 id="xpm-ram">XPM RAM</h2>
+<p>Module name: <code>wb_xpm_ram</code></p>
+<p>This module implements a basic parametrizable XPM RAM SLAVE module.</p>
+<p>Here are relevant parameters as dictated by Wishbone specification B4:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wishbone revision</td>
+<td>B4</td>
+</tr>
+<tr>
+<td>Interface type</td>
+<td>SLAVE</td>
+</tr>
+<tr>
+<td>Supported cycles</td>
+<td>SLAVE, READ/WRITE</td>
+</tr>
+<tr>
+<td>Data port size</td>
+<td>Variable, default 32 bit</td>
+</tr>
+<tr>
+<td>Data port granularity</td>
+<td>Variable, default 8 bit</td>
+</tr>
+<tr>
+<td>Data port max size</td>
+<td>Dictated by XPM macro, for 2024.1 version it is 4608 bits</td>
+</tr>
+<tr>
+<td>Data transfer ordering</td>
+<td>Little endian</td>
+</tr>
+</tbody>
+</table>
+<h2 id="32-bit-gpio">32-bit GPIO</h2>
+<p>Module name: <code>wb_gpio</code></p>
+<p>This module implements a 32-bit wide GPIO ports.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wishbone revision</td>
+<td>B4</td>
+</tr>
+<tr>
+<td>Interface type</td>
+<td>SLAVE</td>
+</tr>
+<tr>
+<td>Supported cycles</td>
+<td>SLAVE, (pipelined) READ/WRITE</td>
+</tr>
+<tr>
+<td>Data port size</td>
+<td>32 bit</td>
+</tr>
+<tr>
+<td>Data port granularity</td>
+<td>32 bit (byte or half word access not supported)</td>
+</tr>
+<tr>
+<td>Data port max size</td>
+<td>32 bit</td>
+</tr>
+<tr>
+<td>Data transfer ordering</td>
+<td>Little endian</td>
+</tr>
+</tbody>
+</table>
+<p>GPIO consists of 3 registers: direction register, read data register and write data register. GPIO register set is word-addressable only. Only lower 4 bits of address
+are decoded. <code>X</code> means don't care.</p>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Access</th>
+<th>Register</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4'b00XX</td>
+<td>R/W</td>
+<td>direction</td>
+</tr>
+<tr>
+<td>4'b01XX</td>
+<td>R/W</td>
+<td>data to be output on ports</td>
+</tr>
+<tr>
+<td>4'b10XX</td>
+<td>R</td>
+<td>data read from ports</td>
+</tr>
+</tbody>
+</table>
+<p>Direction register drives all 32 ports, meaning each bit controls one port. Directions are encoded as following:</p>
+<ul>
+<li>
+<p><code>0</code>: input</p>
+</li>
+<li>
+<p><code>1</code>: output</p>
+</li>
+</ul>
+<h2 id="sosif">SOSIF</h2>
+<p>Module name: <code>wb_sosif</code></p>
+<p>This block implements an interface between any Wishbone master (e.g. CPU) and an RTL simulator. This block is obviously non-synthesizable.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wishbone revision</td>
+<td>B4</td>
+</tr>
+<tr>
+<td>Interface type</td>
+<td>SLAVE</td>
+</tr>
+<tr>
+<td>Supported cycles</td>
+<td>SLAVE, READ/WRITE</td>
+</tr>
+<tr>
+<td>Data port size</td>
+<td>32 bit</td>
+</tr>
+<tr>
+<td>Data port granularity</td>
+<td>32 bit (byte or half word access not supported)</td>
+</tr>
+<tr>
+<td>Data port max size</td>
+<td>32 bit</td>
+</tr>
+<tr>
+<td>Data transfer ordering</td>
+<td>Little endian</td>
+</tr>
+</tbody>
+</table>
+<h3 id="usage">Usage</h3>
+<p>It is possible to use this interface for example as a way of communication between simulated CPU and an RTL simulator. For now, the interface supports halting the simulation and sending messages to be printed to the log.</p>
+<p>The SOSIF is available via a single write-only memory mapped register. Address depends on your interconnect configuration.</p>
+<p>The SOSIF is interfaced by writing a word to this address. The word contains a command (OP) and optionally some arguments. Following table describes format of the word for every supported command:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Byte 3</th>
+<th>Byte 2</th>
+<th>Byte 1</th>
+<th>Byte 0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Halt simulation, no status</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>01</td>
+</tr>
+<tr>
+<td>Halt simulation with test passed</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>02</td>
+</tr>
+<tr>
+<td>Halt simulation with test failed</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>03</td>
+</tr>
+<tr>
+<td>Put character to msg buffer</td>
+<td>00</td>
+<td>00</td>
+<td>&lt;character&gt;</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Flush buffer with $info</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>11</td>
+</tr>
+<tr>
+<td>Flush buffer with $warning</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Flush buffer with $error</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>13</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<ul>
+<li>
+<p>To terminate the simulation without any additional message, write <code>0x00000001</code>.</p>
+</li>
+<li>
+<p>To put character 'A' to a message buffer and then print it using SystemVerilog's <code>$info</code>, write <code>0x00004110</code> and then <code>0x00000011</code>.</p>
+</li>
+</ul>
+<h2 id="pwm">PWM</h2>
+<p>Module name: <code>wb_pwm</code></p>
+<p>This block implements very simple 12-bit PWM outputs.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wishbone revision</td>
+<td>B4</td>
+</tr>
+<tr>
+<td>Interface type</td>
+<td>SLAVE</td>
+</tr>
+<tr>
+<td>Supported cycles</td>
+<td>SLAVE, (pipelined) READ/WRITE</td>
+</tr>
+<tr>
+<td>Data port size</td>
+<td>32 bit</td>
+</tr>
+<tr>
+<td>Data port granularity</td>
+<td>32 bit (byte or half word access not supported)</td>
+</tr>
+<tr>
+<td>Data port max size</td>
+<td>32 bit</td>
+</tr>
+<tr>
+<td>Data transfer ordering</td>
+<td>Little endian</td>
+</tr>
+</tbody>
+</table>
+<p>The PWM block contains a variable number of 12-bit PWMs. The number of PWMs is configurable via <code>PWM_PORT_CNT</code> and must be even.</p>
+<p>Depending on PWM count, there will be (<code>PWM_PORT_CNT</code>/2) number of 32-bit configuration registers, each register contains a duty cycle configuration of two PWM outputs (called LO and HI) The structure of the register follows:</p>
+<table>
+<thead>
+<tr>
+<th>Bits</th>
+<th>Access</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>31-28</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>27-16</td>
+<td>R/W</td>
+<td>PWM HI duty cycle</td>
+</tr>
+<tr>
+<td>15-12</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>11-0</td>
+<td>R/W</td>
+<td>PWM LO duty cycle</td>
+</tr>
+</tbody>
+</table>
+<p>The registers are mapped to addresses in sequential manner. For example, if <code>PWM_PORT_CNT</code> is 8, there will be 4 registers available at these addresses:</p>
+<ul>
+<li><code>32'hxxxx_xxx0</code></li>
+<li><code>32'hxxxx_xxx4</code></li>
+<li><code>32'hxxxx_xxx8</code></li>
+<li><code>32'hxxxx_xxxC</code></li>
+</ul>
+<p>where 'x' means don't care -- this part of address will be mapped by your interconnect.</p>
+<h2 id="debouncer">Debouncer</h2>
+<p>Module name: <code>wb_debouncer</code></p>
+<p>The debouncer block is useful for denoising external user inputs, such as buttons (often present on learning FPGA boards, such as Basys 3, Zybo, Nexys Video...).</p>
+<p>The debouncer contains variable number of outputs (configurable by <code>PORT_CNT</code> parameter, up to 32). The width of debouncing timer is configurable (<code>TIMER_WIDTH</code>). It is recommended to configure this parameter depending on clock speed.</p>
+<p>The debouncer works as following: if change on input is detected, a timer will be started. If timer reaches top (see note), input will be passed to output. However, if a change is detected before timer reaches top, the timer will be restarted and the process is repeated.</p>
+<p><em>Note: to spare some logic, only top bit of the timer is checked. As such, the real length of timer is roughly one bit lower.</em></p>
+<p><code>TIMER_WIDTH</code> should be calculated as following:</p>
+<p><code>TIMER_WIDTH</code> = ceil(log2(largest_gap_between_bounces * clock_speed)) + 1</p>
+<p>The default value (22) is calculated for 100 MHz clock and ~20 ms gap between bounces.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wishbone revision</td>
+<td>B4</td>
+</tr>
+<tr>
+<td>Interface type</td>
+<td>SLAVE</td>
+</tr>
+<tr>
+<td>Supported cycles</td>
+<td>SLAVE, (pipelined) READ/WRITE</td>
+</tr>
+<tr>
+<td>Data port size</td>
+<td>32 bit</td>
+</tr>
+<tr>
+<td>Data port granularity</td>
+<td>32 bit (byte or half word access not supported)</td>
+</tr>
+<tr>
+<td>Data port max size</td>
+<td>32 bit</td>
+</tr>
+<tr>
+<td>Data transfer ordering</td>
+<td>Little endian</td>
+</tr>
+</tbody>
+</table>
+<p>There is only one read-only register, where each bit represents a single input. It there is less than 32 inputs configured, bits will be mapped LSB-first, the others will be read-only zero.</p>
+<h2 id="risc-v-compliant-machine-timer">RISC-V compliant machine timer</h2>
+<p>Module name: <code>wb_riscv_timer</code></p>
+<p>This module implements a 64-bit timer with IRQ output which complies to the RISC-V Privileged Specification.</p>
+<p>There is only one parameter: CLK_FREQUENCY_HZ, which should be set to a frequency of the system clock. It is used
+by the platform to determine timer tick frequency as required by the specification.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wishbone revision</td>
+<td>B4</td>
+</tr>
+<tr>
+<td>Interface type</td>
+<td>SLAVE</td>
+</tr>
+<tr>
+<td>Supported cycles</td>
+<td>SLAVE, (pipelined) READ/WRITE</td>
+</tr>
+<tr>
+<td>Data port size</td>
+<td>32 bit</td>
+</tr>
+<tr>
+<td>Data port granularity</td>
+<td>32 bit (byte or half word access not supported)</td>
+</tr>
+<tr>
+<td>Data port max size</td>
+<td>32 bit</td>
+</tr>
+<tr>
+<td>Data transfer ordering</td>
+<td>Little endian</td>
+</tr>
+</tbody>
+</table>
+<p>Timer consists of 3 pcs of 64-bit registers:</p>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Access</th>
+<th>Register</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5'b00HXX</td>
+<td>R/W</td>
+<td>mtime (timer value)</td>
+</tr>
+<tr>
+<td>5'b01HXX</td>
+<td>R/W</td>
+<td>mtimecmp (timer compare register)</td>
+</tr>
+<tr>
+<td>5'b10HXX</td>
+<td>R</td>
+<td>timer tick frequency</td>
+</tr>
+</tbody>
+</table>
+<p>Notes:
+- XX means don't care. Because granularity is 32-bit, all 4 byte offsets will return the same value.
+- H is decoded as low/high word selector. Because registers are 64-bit (for all architectures) and the bus is only 32-bit, this selector bit is required.
+- Timer tick is actually a constant set by the CLK_FREQUENCY_HZ.</p>
+<p>There is an IRQ output, which is triggered when mtime &gt;= mtimecmp and stays until this condition is true.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="VESP Wishbone Modules documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../debugging/" class="btn btn-neutral float-right" title="Debugging in simulation">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../debugging/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
