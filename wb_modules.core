@@ -13,6 +13,7 @@ filesets:
       - rtl/debouncer/debouncer_block.sv
       - rtl/debouncer/wb_debouncer.sv
       - rtl/mem/wb_xpm_ram.sv
+      - rtl/mem/wb_xpm_ram_pipelined.sv
       - rtl/sosif/wb_sosif.sv
       - rtl/timer/wb_riscv_timer.sv
     file_type: systemVerilogSource
